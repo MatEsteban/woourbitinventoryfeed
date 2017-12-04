@@ -1,13 +1,13 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
- * Class UPF_Admin_Page_Abstract
+ * Class UIF_Admin_Page_Abstract
  */
-abstract class UPF_Admin_Page_Abstract extends UPF_Template_Abstract
+abstract class UIF_Admin_Page_Abstract extends UIF_Template_Abstract
 {
     /**
      * Page slug
@@ -15,7 +15,7 @@ abstract class UPF_Admin_Page_Abstract extends UPF_Template_Abstract
     const SLUG = '';
 
     /**
-     * @var UPF_Admin_Menu_Element
+     * @var UIF_Admin_Menu_Element
      */
     protected $menuElement;
 
@@ -25,10 +25,10 @@ abstract class UPF_Admin_Page_Abstract extends UPF_Template_Abstract
     protected $childPages;
 
     /**
-     * UPF_Admin_Page_Abstract constructor.
-     * @param UPF_Core $core
+     * UIF_Admin_Page_Abstract constructor.
+     * @param UIF_Core $core
      */
-    public function __construct(UPF_Core $core)
+    public function __construct(UIF_Core $core)
     {
         $this->init();
         $this->menuElement->setFunction(array($this, 'printTemplate'));
@@ -42,7 +42,7 @@ abstract class UPF_Admin_Page_Abstract extends UPF_Template_Abstract
     }
 
     /**
-     * @return UPF_Admin_Menu_Element
+     * @return UIF_Admin_Menu_Element
      */
     public function getMenuElement()
     {
@@ -54,7 +54,7 @@ abstract class UPF_Admin_Page_Abstract extends UPF_Template_Abstract
      */
     protected function init()
     {
-        $this->menuElement = new UPF_Admin_Menu_Element(
+        $this->menuElement = new UIF_Admin_Menu_Element(
             '',
             '',
             '',
@@ -65,15 +65,15 @@ abstract class UPF_Admin_Page_Abstract extends UPF_Template_Abstract
     }
 
     /**
-     * @param UPF_Admin_Page_Abstract $page
+     * @param UIF_Admin_Page_Abstract $page
      */
-    public function addChildPage(UPF_Admin_Page_Abstract $page)
+    public function addChildPage(UIF_Admin_Page_Abstract $page)
     {
         $this->childPages[] = $page;
     }
 
     /**
-     * @return UPF_Admin_Page_Abstract[]
+     * @return UIF_Admin_Page_Abstract[]
      */
     public function getChildPages()
     {

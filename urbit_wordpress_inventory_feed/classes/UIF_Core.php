@@ -1,51 +1,51 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
  * Class UrbitProductFeedCore
  */
-class UPF_Core
+class UIF_Core
 {
     /**
      * Name of the page that is created
      */
-    const PAGE_NAME = 'Urbit Product Feed';
+    const PAGE_NAME = 'Urbit Inventory Feed';
 
     /**
      * Config key
      */
-    const CONFIG_KEY = 'urbit_productfeed_config';
+    const CONFIG_KEY = 'urbit_inventoryfeed_config';
 
     /**
-     * @var UPF_Template
+     * @var UIF_Template
      */
     protected $template;
 
     /**
-     * @var UPF_Cache
+     * @var UIF_Cache
      */
     protected $cache;
 
     /**
-     * @var UPF_Feed
+     * @var UIF_Feed
      */
     protected $feed;
 
     /**
-     * @var UPF_Query
+     * @var UIF_Query
      */
     protected $query;
 
     /**
-     * @var UPF_Product
+     * @var UIF_Product
      */
     protected $product;
 
     /**
-     * @var UPF_Config
+     * @var UIF_Config
      */
     protected $config;
 
@@ -71,18 +71,18 @@ class UPF_Core
      */
     public function init()
     {
-        $this->template = new UPF_Template($this);
-        $this->cache    = new UPF_Cache($this);
-        $this->feed     = new UPF_Feed($this);
-        $this->query    = new UPF_Query($this);
-        $this->product  = new UPF_Product($this);
-        $this->config   = new UPF_Config($this);
+        $this->template = new UIF_Template($this);
+        $this->cache    = new UIF_Cache($this);
+        $this->feed     = new UIF_Feed($this);
+        $this->query    = new UIF_Query($this);
+        $this->product  = new UIF_Product($this);
+        $this->config   = new UIF_Config($this);
 
         $this->wcProductFactory = new WC_Product_Factory();
     }
 
     /**
-     * @return UPF_Template
+     * @return UIF_Template
      */
     public function getTemplate()
     {
@@ -90,7 +90,7 @@ class UPF_Core
     }
 
     /**
-     * @return UPF_Cache
+     * @return UIF_Cache
      */
     public function getCache()
     {
@@ -98,7 +98,7 @@ class UPF_Core
     }
 
     /**
-     * @return UPF_Feed
+     * @return UIF_Feed
      */
     public function getFeed()
     {
@@ -106,7 +106,7 @@ class UPF_Core
     }
 
     /**
-     * @return UPF_Query
+     * @return UIF_Query
      */
     public function getQuery()
     {
@@ -115,12 +115,12 @@ class UPF_Core
 
     /**
      * @param null|int|WC_Product $product
-     * @return UPF_Product
+     * @return UIF_Product
      */
     public function getProduct($product = null)
     {
         if ($product) {
-            return new UPF_Product(
+            return new UIF_Product(
                 $this,
                 $product instanceof WC_Product ? $product : $this->wcProductFactory->get_product((int) $product)
             );
@@ -130,7 +130,7 @@ class UPF_Core
     }
 
     /**
-     * @return UPF_Config
+     * @return UIF_Config
      */
     public function getConfig()
     {
@@ -163,7 +163,7 @@ class UPF_Core
 
         //setup default cache duration
         update_option(self::CONFIG_KEY, array(
-            'cache' => UPF_Feed::SCHEDULE_INTERVAL_HOURLY_TIME
+            'cache' => UIF_Feed::SCHEDULE_INTERVAL_5MIN_TIME
         ));
     }
 
@@ -186,7 +186,7 @@ class UPF_Core
     {
         return in_array(
             'woocommerce/woocommerce.php',
-            apply_filters('active_plugins', get_option('active_plugins'))
+            apply_filters('active_plugins', get_option( 'active_plugins'))
         );
     }
 }

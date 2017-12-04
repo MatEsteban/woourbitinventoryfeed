@@ -1,29 +1,29 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
- * Class UPF_Admin_Core
+ * Class UIF_Admin_Core
  */
-class UPF_Admin_Core
+class UIF_Admin_Core
 {
     /**
-     * @var UPF_Admin_Pages
+     * @var UIF_Admin_Pages
      */
     protected $pages;
 
     /**
-     * @var UPF_Core
+     * @var UIF_Core
      */
     protected $core;
 
     /**
-     * UPF_Admin_Core constructor.
-     * @param UPF_Core $core
+     * UIF_Admin_Core constructor.
+     * @param UIF_Core $core
      */
-    public function __construct(UPF_Core $core)
+    public function __construct(UIF_Core $core)
     {
         $this->core = $core;
 
@@ -38,17 +38,17 @@ class UPF_Admin_Core
         /*
          * Setup pages
          */
-        $mainPage   = new UPF_Admin_Main_Page($this->core);
-        $configPage = new UPF_Admin_Config_Page($this->core);
+        $mainPage   = new UIF_Admin_Main_Page($this->core);
+        $configPage = new UIF_Admin_Config_Page($this->core);
 
         //set child pages
         $mainPage->addChildPage($configPage);
 
-        $this->pages = new UPF_Admin_Pages(array($mainPage));
+        $this->pages = new UIF_Admin_Pages(array($mainPage));
     }
 
     /**
-     * @return UPF_Admin_Pages
+     * @return UIF_Admin_Pages
      */
     public function getPagesObject()
     {

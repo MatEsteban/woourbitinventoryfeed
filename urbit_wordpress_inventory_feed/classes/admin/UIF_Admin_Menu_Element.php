@@ -1,13 +1,13 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
- * Class UPF_Admin_Menu_Element
+ * Class UIF_Admin_Menu_Element
  */
-class UPF_Admin_Menu_Element
+class UIF_Admin_Menu_Element
 {
     /**
      * Menu element types
@@ -46,7 +46,7 @@ class UPF_Admin_Menu_Element
     public $position;
 
     /**
-     * @var UPF_Admin_Menu_Element
+     * @var UIF_Admin_Menu_Element
      */
     protected $parentMenuElement;
 
@@ -61,7 +61,7 @@ class UPF_Admin_Menu_Element
     protected $function;
 
     /**
-     * UPF_Admin_Menu_Element constructor.
+     * UIF_Admin_Menu_Element constructor.
      *
      * @param string $pageTitle
      * @param string $menuTitle
@@ -91,9 +91,9 @@ class UPF_Admin_Menu_Element
     }
 
     /**
-     * @param UPF_Admin_Menu_Element $parentMenuElement
+     * @param UIF_Admin_Menu_Element $parentMenuElement
      */
-    public function setParentMenuElement(UPF_Admin_Menu_Element $parentMenuElement)
+    public function setParentMenuElement(UIF_Admin_Menu_Element $parentMenuElement)
     {
         $this->parentMenuElement = $parentMenuElement;
         $this->type = static::TYPE_CHILD;
@@ -108,7 +108,7 @@ class UPF_Admin_Menu_Element
     }
 
     /**
-     * @return UPF_Admin_Menu_Element
+     * @return UIF_Admin_Menu_Element
      */
     public function getParentMenuElement()
     {

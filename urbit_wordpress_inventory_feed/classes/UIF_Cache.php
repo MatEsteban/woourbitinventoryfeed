@@ -1,15 +1,15 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
-class UPF_Cache
+class UIF_Cache
 {
     /**
      * Cache directory
      */
-    const CACHE_DIR = URBIT_PRODUCT_FEED_PLUGIN_DIR . '/cache';
+    const CACHE_DIR = URBIT_INVENTORY_FEED_PLUGIN_DIR . '/cache';
 
     /**
      * Cache file name suffix
@@ -17,15 +17,15 @@ class UPF_Cache
     const CACHE_NAME_SUFFIX = 'product-feed';
 
     /**
-     * @var UPF_Core
+     * @var UIF_Core
      */
     protected $core;
 
     /**
-     * UPF_Cache constructor.
-     * @param UPF_Core $core
+     * UIF_Cache constructor.
+     * @param UIF_Core $core
      */
-    public function __construct(UPF_Core $core)
+    public function __construct(UIF_Core $core)
     {
         $this->core = $core;
     }
@@ -71,7 +71,7 @@ class UPF_Cache
      */
     public function checkFeedCacheExpired($cacheFile)
     {
-    	return true;
+    	return true;    // TODO: only for debug. remove before commit.
         if (!$cacheFile) {
             return true;
         }
@@ -79,7 +79,7 @@ class UPF_Cache
         //get cache duration value from config
         $duration = $this->core->getConfig()->get(
             "cron/cache_duration",
-            UPF_Feed::SCHEDULE_INTERVAL_HOURLY_TIME
+            UIF_Feed::SCHEDULE_INTERVAL_HOURLY_TIME
         );
 
         if (empty($duration)) {

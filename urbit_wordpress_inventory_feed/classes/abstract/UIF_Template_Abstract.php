@@ -1,13 +1,13 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
- * Class UPF_Template_Abstract
+ * Class UIF_Template_Abstract
  */
-abstract class UPF_Template_Abstract
+abstract class UIF_Template_Abstract
 {
     /**
      * Base template
@@ -17,7 +17,7 @@ abstract class UPF_Template_Abstract
     /**
      * Templates directory
      */
-    const TEMPLATES_DIR = URBIT_PRODUCT_FEED_PLUGIN_DIR . '/templates';
+    const TEMPLATES_DIR = URBIT_INVENTORY_FEED_PLUGIN_DIR . '/templates';
 
     /**
      * @var string
@@ -25,15 +25,15 @@ abstract class UPF_Template_Abstract
     protected $template;
 
     /**
-     * @var UPF_Core
+     * @var UIF_Core
      */
     protected $core;
 
     /**
-     * UPF_Template_Abstract constructor.
-     * @param UPF_Core $core
+     * UIF_Template_Abstract constructor.
+     * @param UIF_Core $core
      */
-    public function __construct(UPF_Core $core)
+    public function __construct(UIF_Core $core)
     {
         $this->core = $core;
         $this->template = static::BASE_TEMPLATE;
@@ -72,10 +72,6 @@ abstract class UPF_Template_Abstract
     public function printTemplate($vars = array(), $template = null)
     {
         $templatePath = static::TEMPLATES_DIR . '/' . ($template ? $template : $this->template) . '.php';
-
-        /*echo "<pre>";
-        print_r($templatePath);
-        print_r($vars);*/
 
         if (is_file($templatePath)) {
             if (!empty($vars)) {

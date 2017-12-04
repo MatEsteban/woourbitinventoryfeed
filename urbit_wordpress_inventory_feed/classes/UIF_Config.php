@@ -1,21 +1,21 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
- * Class UPF_Config
+ * Class UIF_Config
  * @property array cron
  * @property array filter
  * @property array attribute
  */
-class UPF_Config
+class UIF_Config
 {
     /**
      * Config key
      */
-    const CONFIG_KEY = 'urbit_productfeed_config';
+    const CONFIG_KEY = 'urbit_inventoryfeed_config';
 
     /**
      * @var array
@@ -23,7 +23,7 @@ class UPF_Config
     protected static $config;
 
     /**
-     * UPF_Config constructor.
+     * UIF_Config constructor.
      */
     public function __construct()
     {

@@ -1,13 +1,13 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
- * Class UPF_Admin_Main_Page
+ * Class UIF_Admin_Main_Page
  */
-class UPF_Admin_Main_Page extends UPF_Admin_Page_Abstract
+class UIF_Admin_Main_Page extends UIF_Admin_Page_Abstract
 {
     /**
      * Page slug
@@ -24,9 +24,9 @@ class UPF_Admin_Main_Page extends UPF_Admin_Page_Abstract
      */
     protected function init()
     {
-        $this->menuElement = new UPF_Admin_Menu_Element(
+        $this->menuElement = new UIF_Admin_Menu_Element(
             'Urbit Settings Page',
-            'Urbit Feed',
+            'Urbit',
             null,
             static::SLUG,
             'dashicons-cart',

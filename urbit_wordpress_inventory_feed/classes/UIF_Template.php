@@ -1,18 +1,18 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
  * Class UrbitProductFeedTemplate
  */
-class UPF_Template extends UPF_Template_Abstract
+class UIF_Template extends UIF_Template_Abstract
 {
     /**
      * Our page name
      */
-    const POST_NAME = 'urbit-product-feed';
+    const POST_NAME = 'urbit-inventory-feed';
 
     /**
      * Setup template
@@ -20,16 +20,16 @@ class UPF_Template extends UPF_Template_Abstract
     const BASE_TEMPLATE = 'empty';
 
     /**
-     * @var UPF_Core
+     * @var UIF_Core
      */
     protected $core;
 
     /**
-     * UPF_Template constructor.
+     * UIF_Template constructor.
      *
-     * @param UPF_Core $core
+     * @param UIF_Core $core
      */
-    public function __construct(UPF_Core $core)
+    public function __construct(UIF_Core $core)
     {
         parent::__construct($core);
 

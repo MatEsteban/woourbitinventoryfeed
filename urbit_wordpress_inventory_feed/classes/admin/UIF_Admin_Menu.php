@@ -1,13 +1,13 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
- * Class UPF_Admin_Menu
+ * Class UIF_Admin_Menu
  */
-class UPF_Admin_Menu
+class UIF_Admin_Menu
 {
     /**
      * @var array
@@ -15,7 +15,7 @@ class UPF_Admin_Menu
     protected $menuElements;
 
     /**
-     * UPF_Admin_Menu constructor.
+     * UIF_Admin_Menu constructor.
      *
      * @param array $menuElements
      */
@@ -40,26 +40,27 @@ class UPF_Admin_Menu
     {
         global $admin_page_hooks;
 
-        /** @var UPF_Admin_Menu_Element $menuElement */
+        /** @var UIF_Admin_Menu_Element $menuElement */
         foreach ($this->getMenuElements() as $menuElement){
             switch ($menuElement->getType()){
-                case UPF_Admin_Menu_Element::TYPE_MAIN:
+                case UIF_Admin_Menu_Element::TYPE_MAIN:
                     if (!empty($admin_page_hooks[$menuElement->menuSlug])) {
                         continue 2;
                     }
+
                     add_menu_page(
                         $menuElement->pageTitle,
                         $menuElement->menuTitle,
                         $menuElement->capability,
                         $menuElement->menuSlug,
-                        null, //$menuElement->getFunction(),
+                        $menuElement->getFunction(),
                         $menuElement->iconUrl,
                         $menuElement->position
                     );
 
                     break;
 
-                case UPF_Admin_Menu_Element::TYPE_CHILD:
+                case UIF_Admin_Menu_Element::TYPE_CHILD:
                     add_submenu_page(
                         $menuElement->getParentMenuElement()->menuSlug,
                         $menuElement->pageTitle,
@@ -77,9 +78,9 @@ class UPF_Admin_Menu
     /**
      * Add menu element
      *
-     * @param UPF_Admin_Menu_Element $element
+     * @param UIF_Admin_Menu_Element $element
      */
-    public function addMenuElement(UPF_Admin_Menu_Element $element)
+    public function addMenuElement(UIF_Admin_Menu_Element $element)
     {
         array_push($this->menuElements, $element);
     }

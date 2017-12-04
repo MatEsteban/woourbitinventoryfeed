@@ -1,13 +1,13 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
- * Class UPF_Admin_Setting_Section
+ * Class UIF_Admin_Setting_Section
  */
-class UPF_Admin_Settings_Section
+class UIF_Admin_Settings_Section
 {
     /**
      * Page suffix
@@ -30,12 +30,12 @@ class UPF_Admin_Settings_Section
     protected $pageId;
 
     /**
-     * @var UPF_Admin_Settings_Field[]
+     * @var UIF_Admin_Settings_Field[]
      */
     protected $fields;
 
     /**
-     * UPF_Admin_Settings_Section constructor.
+     * UIF_Admin_Settings_Section constructor.
      * @param string $id
      * @param string $name
      * @param mixed $pageId
@@ -53,9 +53,9 @@ class UPF_Admin_Settings_Section
     }
 
     /**
-     * @param UPF_Admin_Settings_Field $field
+     * @param UIF_Admin_Settings_Field $field
      */
-    public function addField(UPF_Admin_Settings_Field $field)
+    public function addField(UIF_Admin_Settings_Field $field)
     {
         $this->fields[] = $field;
     }

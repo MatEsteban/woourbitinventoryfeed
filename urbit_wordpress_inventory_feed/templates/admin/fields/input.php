@@ -1,1 +1,1 @@
-<input type="<?= $type ?>" name="<?= $name ?>" value="<?= $value ?>" />
+<input class="<?= 'input-' . $class ?>" type="<?= $type ?>" name="<?= $name ?>" value="<?= $value ?>" />

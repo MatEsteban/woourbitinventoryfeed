@@ -1,26 +1,30 @@
 <?php
 
-if (!defined('URBIT_PRODUCT_FEED_PLUGIN_DIR')) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
- * Class UPF_Feed
+ * Class UIF_Feed
  */
-class UPF_Feed
+class UIF_Feed
 {
+    const SCHEDULE_INTERVAL_5MIN   = '5MIN';
+    const SCHEDULE_INTERVAL_15MIN  = '15MIN';
+    const SCHEDULE_INTERVAL_30MIN  = '30MIN';
+    const SCHEDULE_INTERVAL_45MIN  = '45MIN';
     const SCHEDULE_INTERVAL_HOURLY = 'HOURLY';
-    const SCHEDULE_INTERVAL_DAILY = 'DAILY';
-    const SCHEDULE_INTERVAL_WEEKLY = 'WEEKLY';
-    const SCHEDULE_INTERVAL_MONTHLY = 'MONTHLY';
-    const SCHEDULE_INTERVAL_HOURLY_TIME = 1;
-    const SCHEDULE_INTERVAL_DAILY_TIME = 24;
-    const SCHEDULE_INTERVAL_WEEKLY_TIME = 168;
-    const SCHEDULE_INTERVAL_MONTHLY_TIME = 5040;
+
+    const SCHEDULE_INTERVAL_5MIN_TIME   = 5;
+    const SCHEDULE_INTERVAL_15MIN_TIME  = 15;
+    const SCHEDULE_INTERVAL_30MIN_TIME  = 30;
+    const SCHEDULE_INTERVAL_45MIN_TIME  = 45;
+    const SCHEDULE_INTERVAL_HOURLY_TIME = 60;
+
     const FEED_VERSION = '2017-06-28-1';
 
     /**
-     * @var UPF_Core
+     * @var UIF_Core
      */
     protected $core;
 
@@ -30,10 +34,10 @@ class UPF_Feed
     protected $data = [];
 
     /**
-     * UPF_Feed constructor.
-     * @param UPF_Core $core
+     * UIF_Feed constructor.
+     * @param UIF_Core $core
      */
-    public function __construct(UPF_Core $core)
+    public function __construct(UIF_Core $core)
     {
         $this->core = $core;
     }
@@ -41,13 +45,13 @@ class UPF_Feed
     /**
      * @param array $filter
      */
-    public function generate($filter = [])
+    public function generate($filter = array())
     {
-        /** @var UPF_Cache $cache */
+        /** @var UIF_Cache $cache */
         $cache = $this->core->getCache();
 
         $feedResult = '';
-        $cacheFile = $cache->getLastCacheFile();
+        $cacheFile  = $cache->getLastCacheFile();
 
         if ($cache->checkFeedCacheExpired($cacheFile)) {
             $feedResult = $this->getFeedJson($filter);
@@ -69,20 +73,20 @@ class UPF_Feed
      * Process feed generation
      * @param array $filter
      */
-    protected function process($filter = [])
+    protected function process($filter = array())
     {
         $this->core->getCache()->flushAllCacheFiles();
 
-        $query = $this->core->getQuery()->productsQuery($filter);
+        $selectedProducts = $this->core->getConfig()->getSelect("filter/product", []);
 
-        foreach ($query->posts as $productId) {
+        foreach ($selectedProducts as $productId) {
             $this->processProduct(
                 $this->core->getProduct($productId)
             );
         }
     }
 
-    protected function processProduct(UPF_Product $product)
+    protected function processProduct(UIF_Product $product)
     {
         if ($product->isVariable()) {
             foreach ($product->getVariables() as $product) {
@@ -101,29 +105,29 @@ class UPF_Feed
      * @param array $filter
      * @return array
      */
-    public function getFeedData($filter = [])
+    public function getFeedData($filter = array())
     {
         $lang = get_locale();
 
         $version = $this->getFeedVersion();
 
-        return [
-            '$schema'            => "https://raw.githubusercontent.com/urbitassociates/urbit-merchant-feeds/master/schemas/inventory/{$version}/product.json",
-            'content_language'   => $lang,
+        return array(
+            '$schema' => "https://raw.githubusercontent.com/urbitassociates/urbit-merchant-feeds/master/schemas/inventory/{$version}/inventory.json",
+            'content_language' => $lang,
             'attribute_language' => $lang,
-            'content_type'       => 'products',
-            'target_country'     => [
-                $this->country_handle(),
-            ],
-            'version'            => $version,
-            'feed_format'        => [
+            'content_type' => 'products',
+            'target_country' => array(
+	            $this->country_handle(),
+            ),
+            'version' => $version,
+            'feed_format' => array(
                 "encoding" => "UTF-8",
-            ],
-            'schedule'           => [
+            ),
+            'schedule' => array(
                 'interval' => $this->getIntervalText(),
-            ],
-            'entities'           => $this->getData($filter),
-        ];
+            ),
+            'entities' => $this->getData($filter),
+        );
     }
 
     /**
@@ -133,9 +137,8 @@ class UPF_Feed
     {
         $countries = new WC_Countries();
         $code = $this->core->getConfig()->getSelect("filter/countries", []);
-        $country = WC_Tax::find_rates(['country' => $code[0]]);
-
-        if (count($country) == 0) {
+        $country = WC_Tax::find_rates(array('country' => $code[0]));
+        if(count($country) == 0) {
             return $countries->get_base_country();
         }
 
@@ -146,7 +149,7 @@ class UPF_Feed
      * @param array $filter
      * @return string
      */
-    public function getFeedJson($filter = [])
+    public function getFeedJson($filter = array())
     {
         return json_encode($this->getFeedData($filter), JSON_PRETTY_PRINT);
     }
@@ -155,7 +158,7 @@ class UPF_Feed
      * @param array $filter
      * @return array
      */
-    public function getData($filter = [])
+    public function getData($filter = array())
     {
         if (empty($this->data)) {
             $this->process($filter);
@@ -172,15 +175,16 @@ class UPF_Feed
     {
         $cacheDuration = $this->core->getConfig()->get(
             "cron/cache_duration",
-            self::SCHEDULE_INTERVAL_HOURLY_TIME
+            self::SCHEDULE_INTERVAL_5MIN
         );
 
-        foreach ([
-            static::SCHEDULE_INTERVAL_HOURLY_TIME  => static::SCHEDULE_INTERVAL_HOURLY,
-            static::SCHEDULE_INTERVAL_DAILY_TIME   => static::SCHEDULE_INTERVAL_DAILY,
-            static::SCHEDULE_INTERVAL_WEEKLY_TIME  => static::SCHEDULE_INTERVAL_WEEKLY,
-            static::SCHEDULE_INTERVAL_MONTHLY_TIME => static::SCHEDULE_INTERVAL_MONTHLY,
-        ] as $time => $val) {
+        foreach (array(
+            self::SCHEDULE_INTERVAL_5MIN_TIME   => self::SCHEDULE_INTERVAL_5MIN,
+            self::SCHEDULE_INTERVAL_15MIN_TIME  => self::SCHEDULE_INTERVAL_15MIN,
+            self::SCHEDULE_INTERVAL_30MIN_TIME  => self::SCHEDULE_INTERVAL_30MIN,
+            self::SCHEDULE_INTERVAL_45MIN_TIME  => self::SCHEDULE_INTERVAL_45MIN,
+            self::SCHEDULE_INTERVAL_HOURLY_TIME => self::SCHEDULE_INTERVAL_HOURLY,
+        ) as $time => $val) {
             if ($cacheDuration <= $time) {
                 return $val;
             }

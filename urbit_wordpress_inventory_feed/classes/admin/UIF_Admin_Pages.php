@@ -1,13 +1,13 @@
 <?php
 
-if (!defined( 'URBIT_PRODUCT_FEED_PLUGIN_DIR' )) {
+if (!defined( 'URBIT_INVENTORY_FEED_PLUGIN_DIR' )) {
     exit;
 }
 
 /**
- * Class UPF_Admin_Pages
+ * Class UIF_Admin_Pages
  */
-class UPF_Admin_Pages
+class UIF_Admin_Pages
 {
     /**
      * @var array
@@ -15,7 +15,7 @@ class UPF_Admin_Pages
     protected $pages;
 
     /**
-     * @var UPF_Admin_Menu
+     * @var UIF_Admin_Menu
      */
     protected $menu;
 
@@ -25,15 +25,15 @@ class UPF_Admin_Pages
     protected $menuElements;
 
     /**
-     * UPF_Admin_Pages constructor.
+     * UIF_Admin_Pages constructor.
      * Init all pages
      *
-     * @param UPF_Admin_Page_Abstract[] $pages
+     * @param UIF_Admin_Page_Abstract[] $pages
      */
     public function __construct($pages)
     {
         foreach ($pages as $page) {
-            if ($page instanceof UPF_Admin_Page_Abstract && !empty($page->getChildPages())) {
+            if ($page instanceof UIF_Admin_Page_Abstract && !empty($page->getChildPages())) {
                 $menuElement = $page->getMenuElement();
                 $this->pages[] = $page;
                 $this->menuElements[] = $menuElement;
@@ -45,7 +45,7 @@ class UPF_Admin_Pages
             }
         }
 
-        $this->menu = new UPF_Admin_Menu($this->menuElements);
+        $this->menu = new UIF_Admin_Menu($this->menuElements);
     }
 
     /**
@@ -57,7 +57,7 @@ class UPF_Admin_Pages
     }
 
     /**
-     * @return UPF_Admin_Menu
+     * @return UIF_Admin_Menu
      */
     public function getMenu()
     {
