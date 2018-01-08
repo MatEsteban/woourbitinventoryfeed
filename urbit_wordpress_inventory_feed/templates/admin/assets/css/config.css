@@ -1,11 +1,11 @@
-.bootstrap-wrapper .btn-dark {
+.btn-dark {
     display: flex;
-    margin: 10px 0;
+    margin: 10px 0px;
     width: 100%;
 }
 
 .filter-buttons {
-    margin: 15px 0;
+    margin: 15px 0px;
 }
 
 .loader .background {

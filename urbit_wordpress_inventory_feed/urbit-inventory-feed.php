@@ -31,8 +31,10 @@ if (is_admin()) {
         if($hook != 'urbit_page_inventory-feed' && $hook != 'urbit-feed_page_inventory-feed') {
             return;
         }
-        wp_enqueue_style( 'bootstrap_css', plugins_url('templates/admin/assets/css/compiled-bootstrap.css', __FILE__) );
+        wp_enqueue_style( 'bootstrap_css', plugins_url('templates/admin/assets/css/bootstrap.min.css', __FILE__) );
         wp_enqueue_style( 'config_css', plugins_url('templates/admin/assets/css/config.css', __FILE__) );
+        wp_enqueue_script( 'bootstrap_js', plugins_url('templates/admin/assets/js/bootstrap.js', __FILE__) );
+        wp_enqueue_script( 'jquery', plugins_url('templates/admin/assets/js/jquery-3.2.1.min.js', __FILE__) );
         wp_enqueue_script( 'multiselect', plugins_url('templates/admin/assets/js/multiselect.js', __FILE__) );
         wp_enqueue_script( 'config_js', plugins_url('templates/admin/assets/js/config.js', __FILE__) );
     }
